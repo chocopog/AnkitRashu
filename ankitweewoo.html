@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Valentine 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+    }
+
+    .container {
+        padding: 22px;
+        max-width: 420px;
+    }
+
+    h1 {
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 18px;
+        margin-bottom: 30px;
+        line-height: 1.4;
+    }
+
+    .buttons {
+        position: relative;
+        height: 120px;
+    }
+
+    button {
+        padding: 14px 28px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #yesBtn {
+        background: #fff;
+        color: #ff4d6d;
+        font-weight: bold;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    #noBtn {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        position: absolute;
+        left: 60%;
+        top: 0;
+    }
+
+    .final {
+        display: none;
+        animation: fadeIn 2.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .emoji {
+        position: fixed;
+        top: -20px;
+        font-size: 26px;
+        animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    .musicTag {
+        margin-top: 15px;
+        font-size: 14px;
+        opacity: 0.85;
+    }
+
+    audio {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 Background Music -->
+<audio id="bgMusic" loop>
+    <source src="cupid.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="start">
+    <h1>Every love story has one moment 💫</h1>
+    <p>Rashu,<br>this is mine ❤️</p>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="musicTag">🎵 Tap anywhere</div>
+</div>
+
+<div class="container final" id="final">
+    <h1>💖💖💖</h1>
+    <p>
+        This wasn’t a question.<br><br>
+        It was my promise. ♾️<br><br>
+        Be my Valentine —<br>
+        today, tomorrow, forever ❤️
+    </p>
+    <h2>— Ankit 💌</h2>
+
+    <div class="musicTag">🎵 Now Playing: Cupid Chokehold</div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const start = document.getElementById("start");
+    const final = document.getElementById("final");
+    const music = document.getElementById("bgMusic");
+
+    // Move NO button
+    noBtn.addEventListener("touchstart", moveButton);
+    noBtn.addEventListener("mouseover", moveButton);
+
+    function moveButton() {
+        const x = Math.random() * 200 - 100;
+        const y = Math.random() * 80 - 40;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Music setup
+    let musicStarted = false;
+
+    document.body.addEventListener("click", () => {
+        if (!musicStarted) {
+            music.currentTime = 35; // 🎯 romantic hook timing
+            music.volume = 0;
+            music.play();
+            fadeInMusic();
+            musicStarted = true;
+        }
+    }, { once: true });
+
+    function fadeInMusic() {
+        let vol = 0;
+        const fade = setInterval(() => {
+            if (vol < 0.6) {
+                vol += 0.05;
+                music.volume = vol;
+            } else {
+                clearInterval(fade);
+            }
+        }, 300);
+    }
+
+    yesBtn.addEventListener("click", () => {
+        start.style.display = "none";
+        final.style.display = "block";
+        startEmojiRain();
+    });
+
+    function startEmojiRain() {
+        const emojis = ["💖","❤️","💫","🌸","🥰","✨","💞"];
+        setInterval(() => {
+            const emoji = document.createElement("div");
+            emoji.className = "emoji";
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + "vw";
+            emoji.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(emoji);
+
+            setTimeout(() => emoji.remove(), 6000);
+        }, 250);
+    }
+</script>
+
+</body>
+</html>
